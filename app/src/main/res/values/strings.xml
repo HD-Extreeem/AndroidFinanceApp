@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">FinanceApp</string>
+    <string-array name="item">
+        <item>Settings</item>
+        <item>Add new date</item>
+        <item>Search by date</item>
+        <item>Search by category</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings">Change name maybe?</string>
+    <string name="search">Search for some stuff!</string>
+    <string name="home">Welcome!</string>
+</resources>
