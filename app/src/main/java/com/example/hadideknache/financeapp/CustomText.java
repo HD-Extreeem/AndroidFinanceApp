@@ -3,18 +3,14 @@ package com.example.hadideknache.financeapp;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.text.Html;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 /**
- * Created by hadideknache on 2017-09-20.
+ * This class is used for creating a custom text, by extending the textview and drawing on it
+ * Created by Hadi Deknache on 2017-09-20.
  */
 
 public class CustomText extends android.support.v7.widget.AppCompatTextView {
-    String[] colors = {"#FFFF00","#FF00FF","#FF0000","#808080","#00FFFF","#000080","#00FF00","#008080","#008000","#800080"};
-    String textToChange;
-    String coloredText;
 
     public CustomText(Context context) {
         super(context);
@@ -33,6 +29,11 @@ public class CustomText extends android.support.v7.widget.AppCompatTextView {
         }*/
         super.setText(text, type);
     }
+
+    /**
+     * Overridden method which a line is drawn beneath the text
+     * @param canvas the canvas of the textview
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -42,7 +43,6 @@ public class CustomText extends android.support.v7.widget.AppCompatTextView {
         int stopX = canvas.getWidth();
         int y = getHeight()-20;
         int stopY = getHeight()-20;
-
 
         canvas.drawLine(x,y,stopX,stopY,paint);
 

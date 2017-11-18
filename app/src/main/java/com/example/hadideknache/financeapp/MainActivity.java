@@ -6,40 +6,30 @@ import android.support.design.widget.NavigationView;
 
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-
 import android.widget.Button;
-
 import android.widget.TextView;
 
-import com.example.hadideknache.financeapp.Fragments.ExpenditureFragment;
-import com.example.hadideknache.financeapp.Fragments.IncomeFragment;
-import com.example.hadideknache.financeapp.Fragments.MainViewFragment;
-import com.example.hadideknache.financeapp.Fragments.OverViewFragment;
-import com.example.hadideknache.financeapp.Fragments.SearchFramgent;
-import com.example.hadideknache.financeapp.Fragments.SettingsFragment;
 
-
-
+/**
+ * This class is the MainActivity of the application which handles the start of the application
+ * Also handles the swapping of the fragments
+ */
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    //private String[] item;
     private Controller controller;
     private DrawerLayout drawerLayout;
     private Button btnSignOut;
-    private MainViewFragment mainViewFragment;
-    private SearchFramgent searchFramgent;
-    private SettingsFragment settingsFragment;
-    private OverViewFragment overViewFragment;
-    private IncomeFragment incomeFragment;
-    private ExpenditureFragment expenditureFragment;
     private TextView name,email;
     private String emails,names;
 
+    /**
+     * Overriden method for saving the name and email when rotating the phone
+     * @param outState the bundle to save to
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString("name",name.getText().toString());
@@ -47,6 +37,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * Overriden method for restoring the data again
+     * @param savedInstanceState bundle to get data from
+     */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -55,6 +49,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setUserInfo(names,emails);
     }
 
+    /**
+     * Overridden method which is called on start, Initiates the components and starts the process of application
+     * @param savedInstanceState the bundle containing data if saved
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,16 +61,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         init();
         regButton();
         controller = new Controller(this,getIntent());
-        /*if (savedInstanceState == null) {
-
-        }
-        else {
-            controller = new Controller(this,getIntent(),true);
-
-        }*/
         setUserInfo(controller.getName(),controller.getEmail());
 
     }
+
+    /**
+     * Methid initiates the drawers,buttons and headers of the drawer
+     */
     private void init(){
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         btnSignOut = (Button) findViewById(R.id.logout);
@@ -86,19 +81,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         email = (TextView) navHeader.findViewById(R.id.email);
     }
 
+    /**
+     * Register buttons when clicked
+     */
     private void regButton() {
         ButtonListener listener = new ButtonListener();
         btnSignOut.setOnClickListener(listener);
     }
 
 
+    /**
+     * This method handles the swapping of the fragments
+     * @param fragment the fragment that is wanted to be swapped to
+     * @param tag the tag of the fragment
+     */
     public void setFragment(android.support.v4.app.Fragment fragment, String tag){
         android.support.v4.app.FragmentManager fragmanager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmanager.beginTransaction();
-        transaction.replace(R.id.frameLayout, fragment);
+        transaction.replace(R.id.frameLayout, fragment,tag);
         transaction.commit();
     }
 
+    /**
+     * Overridden method handling the item in list, navdrawer
+     * @param item which item was clicked
+     * @return click was handled = true
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -119,6 +127,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    /**
+     * Method overriden to close drawer when clicking back if opened else dont care
+     */
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -129,12 +140,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    /**
+     * Method for setting the information
+     * @param username the username of the logged in user
+     * @param usermail the usermail of the logged in user
+     */
     public void setUserInfo(String username, String usermail) {
         name.setText(username);
         email.setText(usermail);
     }
 
 
+    /**
+     * This inner class handles the button click and operations that should be executed when clicked
+     */
     private class ButtonListener implements View.OnClickListener{
 
         @Override
@@ -146,7 +165,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
-
-
 
 }
