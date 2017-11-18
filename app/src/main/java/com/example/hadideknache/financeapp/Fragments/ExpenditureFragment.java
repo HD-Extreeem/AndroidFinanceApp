@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +24,12 @@ import java.util.ArrayList;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This class represent the fragment of the expenditure tab
+ * Shows expenditures under the expenditure tab, representing different inputs made by the user
+ *  Created by Hadi Deknache on 2017-09-17.
  */
 public class ExpenditureFragment extends Fragment {
-    private String item;//String for tab title
 
-    //Var static here! recylerview
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private EditText etSearchDateFromExp,etSearchDateToExp;
@@ -40,17 +39,22 @@ public class ExpenditureFragment extends Fragment {
     public ExpenditureFragment() {
         // Required empty public constructor
     }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
+
+    /**
+     * Overriden method for saving the information i.ex upon rotating the phone
+     * @param outState bundle where to save the data to
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString("dateToExp",etSearchDateToExp.getText().toString());
         outState.putString("dateFromExp",etSearchDateFromExp.getText().toString());
         super.onSaveInstanceState(outState);
     }
+    /**
+     * Constructor for creating the fragment used for the tabs
+     * @param str tag for the fragment
+     * @return ExpenditureFragment instance
+     */
     public static ExpenditureFragment newInstance(String str) {
         ExpenditureFragment expFrag = new ExpenditureFragment();
         Bundle args = new Bundle();
@@ -59,6 +63,10 @@ public class ExpenditureFragment extends Fragment {
         return expFrag;
     }
 
+    /**
+     * Overriden method which uses the view to register components and listeners for buttons
+     * Initiates the components and fills list if expenditures are availble for specific user
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,20 +75,16 @@ public class ExpenditureFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_expenditure_framgent, container, false);
         init(view);
         regBtn();
-
-        fillRecyclerView(controller.getAllExpenditures());
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         if (savedInstanceState!=null) {
             etSearchDateToExp.setText(savedInstanceState.getString("dateToExp"));
             etSearchDateFromExp.setText(savedInstanceState.getString("dateFromExp"));
         }
+        fillRecyclerView(controller.getAllExpenditures());
+        return view;
     }
-
+    /**
+     * Method for registering the buttons whne pressed
+     */
     private void regBtn() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +98,10 @@ public class ExpenditureFragment extends Fragment {
         etSearchDateFromExp.setOnClickListener(listener);
         etSearchDateToExp.setOnClickListener(listener);
     }
-
+    /**
+     * Method for registering the components upon creating the view and inflating it
+     * @param view the view which contains the components for gui
+     */
     private void init(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewExp);
         recyclerView.setHasFixedSize(true);
@@ -109,7 +116,10 @@ public class ExpenditureFragment extends Fragment {
 
     }
 
-    //Setting recycler view
+    /**
+     * Fills list with pojo expenditureobject each row presents a income object
+     * @param expenditure the expenditures for the user
+     */
     public void fillRecyclerView(Expenditure expenditure[]) {
         ArrayList<Expenditure> arr = new ArrayList<>();
         for (int i = 0; i < expenditure.length; i++) {
@@ -119,10 +129,18 @@ public class ExpenditureFragment extends Fragment {
         recyclerView.setAdapter(adapter);// set adapter on recyclerview
     }
 
+    /**
+     * Method for setting the instance to the controller
+     * @param controller instance for the controller class
+     */
     public void setController(Controller controller) {
         this.controller = controller;
     }
 
+    /**
+     * This inner class is used for listenening to button press occuring in the gui of this fragment
+     * handles the actionspress whn clicking on search,refresh and date to/from
+     */
     private class ButtonListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {

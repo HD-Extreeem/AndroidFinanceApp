@@ -6,9 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hadideknache.financeapp.Databases.UserDBHelper;
 import com.example.hadideknache.financeapp.Fragments.LoginFragment;
 import com.example.hadideknache.financeapp.Fragments.SignUpFragment;
 

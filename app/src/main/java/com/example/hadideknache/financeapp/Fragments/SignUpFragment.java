@@ -1,6 +1,5 @@
 package com.example.hadideknache.financeapp.Fragments;
 
-
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Patterns;
@@ -16,21 +15,27 @@ import com.example.hadideknache.financeapp.User;
 
 import java.util.ArrayList;
 
-
 /**
- * A simple {@link Fragment} subclass.
+ * This fragment handles the signup of the app
+ * Created by Hadi Deknache on 2017-09-13.
  */
 public class SignUpFragment extends Fragment {
     private LoginController controller;
     private EditText etName,etEmail,etPass,etSurname;
     private Button btnReg,btnLogAlready;
-    private int i=0;
-    boolean isEmailReg=false;
     boolean register = true;
+
+
     public SignUpFragment() {
         // Required empty public constructor
     }
-
+    /**
+     * Method is overriden for creating the view and registering the components used for the gui
+     * @param inflater which inflates the view on the screen
+     * @param container viewgroup of the view
+     * @param savedInstanceState bundle containing the save info
+     * @return the view for the loginFragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,21 +47,18 @@ public class SignUpFragment extends Fragment {
 
         return view;
     }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        //outState.putString("namesignup",etName.getText().toString());
-        //outState.putString("emailsignup", etName.getText().toString());
-        //outState.putString("passwordsignup",etPass.getText().toString());
-        //outState.putString("surnamesignup",etSurname.getText().toString());
-        super.onSaveInstanceState(outState);
-    }
+    /**
+     * Method for registering the actions caused when clicking on the buttons
+     */
     private void regButton() {
         btnClickListener listener = new btnClickListener();
         btnLogAlready.setOnClickListener(listener);
         btnReg.setOnClickListener(listener);
     }
-
+    /**
+     * This method initiates the components of this fragment
+     * @param view viewReference that includes all components
+     */
     private void compInit(View view) {
         etName = (EditText) view.findViewById(R.id.etName);
         etSurname = (EditText) view.findViewById(R.id.etSurname);
@@ -66,9 +68,14 @@ public class SignUpFragment extends Fragment {
         btnLogAlready = (Button) view.findViewById(R.id.btnLoginAlready);
     }
 
+    /**
+     * Method for setting the instance of controller
+     * @param controller instance to controller class
+     */
     public void setController(LoginController controller) {
         this.controller = controller;
     }
+
 
     public ArrayList<String> getSaveInformation() {
         ArrayList<String> save = new ArrayList<>();
@@ -79,6 +86,9 @@ public class SignUpFragment extends Fragment {
         return save;
     }
 
+    /**
+     * This inner class handles all button presses made on the gui
+     */
     private class btnClickListener implements View.OnClickListener{
 
         @Override
@@ -98,6 +108,10 @@ public class SignUpFragment extends Fragment {
             }
         }
     }
+
+    /**
+     * Method which checks if everything was typed correctly upon registering
+     */
     private void checkInput() {
         Boolean isUser = controller.checkUser(etEmail.getText().toString().toLowerCase());
 
@@ -125,6 +139,12 @@ public class SignUpFragment extends Fragment {
 
         }
     }
+
+    /**
+     * Method for assuring that password is greater then 5 chars
+     * @param pass
+     * @return
+     */
     private boolean checkPass(CharSequence pass){
         if (pass.length()<=5){
             return false;
@@ -134,10 +154,20 @@ public class SignUpFragment extends Fragment {
         }
     }
 
+    /**
+     * Method for checking if mail is valid
+     * @param mail mail that is going to register
+     * @return if mail is valid or not
+     */
     private Boolean checkEmail(CharSequence mail){
         return Patterns.EMAIL_ADDRESS.matcher(mail).matches();
     }
 
+    /**
+     * Method for checking if name is typed and greater then 1 char
+     * @param name the name that is going to be registered
+     * @return whether a name is typed
+     */
     private Boolean checkName(CharSequence name){
         if (name.length()<=1){
             return false;

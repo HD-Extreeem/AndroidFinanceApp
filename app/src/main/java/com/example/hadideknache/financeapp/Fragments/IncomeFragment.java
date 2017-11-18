@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +24,13 @@ import java.util.ArrayList;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This is the fragment which handles the income tabfragment
+ * Fragment contains the list of the incomes made by the user
+ * Also includes search function
+ * Created by hadideknache on 2017-09-17.
  */
 public class IncomeFragment extends Fragment {
     private String item;//String for tab title
-    //var static innan!
     private RecyclerView recyclerView;
     private static Controller controller;
     private String dateFrom,dateTo;
@@ -41,6 +42,12 @@ public class IncomeFragment extends Fragment {
     public IncomeFragment() {
         // Required empty public constructor
     }
+
+    /**
+     * Constructor for creating the fragment used for the tabs
+     * @param str tag for the fragment
+     * @return incomefragment instance
+     */
     public static IncomeFragment newInstance(String str) {
         IncomeFragment incFrag = new IncomeFragment();
         Bundle args = new Bundle();
@@ -50,20 +57,15 @@ public class IncomeFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString("FromInc",etSearchDateFromInc.getText().toString());
         outState.putString("ToInc",etSearchDateToInc.getText().toString());
-        //outState.putBoolean("dialog",isShowDialog);
-        //outState.putBoolean("isSearch",isSearch);
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * Overriden method for restoring the content if available
+     **/
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -77,7 +79,10 @@ public class IncomeFragment extends Fragment {
 
     }
 
-
+    /**
+     * Overriden method which uses the view to register components and listeners for buttons
+     * Initiates the components and fills list if incomes are availble for specific user
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,6 +94,9 @@ public class IncomeFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Method for registering the buttons whne pressed
+     */
     private void regBtn() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +111,10 @@ public class IncomeFragment extends Fragment {
         etSearchDateToInc.setOnClickListener(listener);
     }
 
+    /**
+     * Method for registering the components upon creating the view and inflating it
+     * @param view the view which contains the components for gui
+     */
     private void init(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewInc);
         recyclerView.setHasFixedSize(true);
@@ -115,8 +127,11 @@ public class IncomeFragment extends Fragment {
         controller.setInstance(this);
     }
 
+    /**
+     * Fills list with incomeobjects each row presents a income object
+     * @param income the incomes for the user
+     */
     public void fillRecyclerView(Income income[]) {
-
         ArrayList<Income> arr = new ArrayList<>();
         for (int i = 0; i < income.length; i++) {
             arr.add(income[i]);
@@ -125,12 +140,18 @@ public class IncomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Method for setting the instance to the controller
+     * @param controller instance for the controller class
+     */
     public void setController(Controller controller) {
         this.controller = controller;
     }
 
-
-
+    /**
+     * This inner class is used for listenening to button press occuring in the gui of this fragment
+     * handles the actionspress whn clicking on search,refresh and date to/from
+     */
     private class ButtonListener implements View.OnClickListener {
 
         @Override
@@ -163,8 +184,4 @@ public class IncomeFragment extends Fragment {
             }
         }
     }
-
-
-
-
 }

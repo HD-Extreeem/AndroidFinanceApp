@@ -3,9 +3,7 @@ package com.example.hadideknache.financeapp.Fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,9 @@ import java.util.ArrayList;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This class represents the overview when the application successfully loging
+ * shows the user piechart and useful information required for the user
+ *  Created by Hadi Deknache on 2017-09-18.
  */
 public class OverViewFragment extends Fragment {
     private static Controller controller;
@@ -37,6 +37,11 @@ public class OverViewFragment extends Fragment {
     public OverViewFragment() {
         // Required empty public constructor
     }
+    /**
+     * Constructor for creating the fragment used for the tabs
+     * @param str tag for the fragment
+     * @return OverviewFragment instance
+     */
     public static OverViewFragment newInstance(String str) {
         OverViewFragment ovrFrag = new OverViewFragment();
         Bundle args = new Bundle();
@@ -44,24 +49,26 @@ public class OverViewFragment extends Fragment {
         ovrFrag.setArguments(args);
         return ovrFrag;
     }
-    public void onCreate (Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
+    /**
+     * Overriden method which uses the view to register components and listeners for buttons
+     * Initiates the components and fills information as balance,total and piechart info
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         // Inflate and populate
+        setRetainInstance(true);
         view = inflater.inflate(R.layout.fragment_over_view, container, false);
         init(view);
         controller.setWelcomeName(tvCardName);
-        Log.v("Checkar","OverviewFragment nu!");
-        //View view =  inflater.inflate(R.layout.fragment_over_view, container, false);
         return view;
     }
-
+    /**
+     * Method for registering the components upon creating the view and inflating it
+     * Also handling the piechart and updating it
+     * @param view the view which contains the components for gui
+     */
     private void init(View view) {
         user = (TextView) view.findViewById(R.id.user);
         pieChart = (PieChart) view.findViewById(R.id.pieChart);
@@ -95,11 +102,19 @@ public class OverViewFragment extends Fragment {
         pieChart.invalidate();
 
     }
+
+    /**
+     * Method for updating the chart when new information added as incomes/expenditures
+     */
     public void updateChart(){
 
         controller.updateChartView(entries,tvBalance,tvSpent,tvTot,labels);
     }
 
+    /**
+     * Method for setting the instance to the controller
+     * @param controller instance for the controller class
+     */
     public void setController(Controller controller) {
         this.controller = controller;
     }

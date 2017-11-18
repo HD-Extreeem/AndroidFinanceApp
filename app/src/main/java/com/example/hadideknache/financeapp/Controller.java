@@ -2,17 +2,13 @@ package com.example.hadideknache.financeapp;
 
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.media.MediaRouter;
 import android.os.Parcelable;
 
 import android.support.v7.app.AlertDialog;
@@ -30,8 +26,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.support.v7.app.AlertDialog;
 
+import com.example.hadideknache.financeapp.Databases.BarCodeDBHelper;
+import com.example.hadideknache.financeapp.Databases.ExpenditureDBHelper;
+import com.example.hadideknache.financeapp.Databases.IncomeDBHelper;
+import com.example.hadideknache.financeapp.Databases.UserDBHelper;
 import com.example.hadideknache.financeapp.Fragments.ExpenditureFragment;
 import com.example.hadideknache.financeapp.Fragments.IncomeFragment;
 import com.example.hadideknache.financeapp.Fragments.MainViewFragment;
@@ -42,7 +41,6 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Created by hadideknache on 2017-09-13.

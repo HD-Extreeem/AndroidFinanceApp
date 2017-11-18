@@ -1,4 +1,4 @@
-package com.example.hadideknache.financeapp;
+package com.example.hadideknache.financeapp.Databases;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
+ * This class handles the database for the barcodes that is being scanned
+ * Also used for getting already scanned before items
  * Created by hadideknache on 2017-09-20.
  */
 
@@ -19,6 +21,9 @@ public class BarCodeDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "barcode.db";
     private static final int DATABASE_VERSION = 1;
 
+    /**
+     * Creating the datatable
+     */
     private static final String DATATABLE_CREATE =
             "create table " + TABLE_NAME + " (" +
                     COLUMN_ID + " integer primary key autoincrement, " +
@@ -27,15 +32,28 @@ public class BarCodeDBHelper extends SQLiteOpenHelper {
                     COLUMN_COST + " text not null, " +
                     COLUMN_ITEMNAME + " text not null);";
 
+    /**
+     * Constructor for creating tableinstance
+     */
     public BarCodeDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Overridden method for creating the database if not already created on first time started
+     * @param sqLiteDatabase
+     */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(DATATABLE_CREATE);
     }
 
+    /**
+     * Method is used when wanting to upgrade database and destroy old one
+     * @param db instance to database
+     * @param oldVersion the version of the database
+     * @param newVersion the new version of the database that is wanted to  be upgraded to
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(UserDBHelper.class.getName(),

@@ -16,7 +16,9 @@ import com.example.hadideknache.financeapp.R;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This class handles the settingsFragment
+ * Let user change information as name,surname,password
+ * Created by Hadi Deknache on 2017-09-17.
  */
 public class SettingsFragment extends Fragment {
     private Controller controller;
@@ -30,19 +32,11 @@ public class SettingsFragment extends Fragment {
     public SettingsFragment() {
         // Required empty public constructor
     }
-    /*public static SettingsFragment newInstance(String str) {
-        SettingsFragment setFrag = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putString("setFrag", str);
-        setFrag.setArguments(args);
-        return setFrag;
-    }*/
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
+    /**
+     * Overriden method which uses the view to register components
+     * Initiates the components and prepares the components
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,24 +49,18 @@ public class SettingsFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //outState.putString("name",name.);
-    }
-
-
-
+    /**
+     * Method for registering the buttons whne pressed
+     */
     private void regButton() {
         ButtonClickListener listener = new ButtonClickListener();
         btnConfirm.setOnClickListener(listener);
     }
 
+    /**
+     * Method for registering the components upon creating the view and inflating it
+     * @param view the view which contains the components for gui
+     */
     public void init(View view) {
         name = (EditText) view.findViewById(R.id.name);
         surName = (EditText) view.findViewById(R.id.surname);
@@ -82,16 +70,18 @@ public class SettingsFragment extends Fragment {
         btnConfirm = (Button) view.findViewById(R.id.btnConf);
     }
 
+    /**
+     * Method for setting the instance to the controller
+     * @param controller instance for the controller class
+     */
     public void setController(Controller controller) {
         this.controller = controller;
     }
 
-    /*public void fillInformation(String names, String surnames, String emails) {
-        name.setText(names);
-        surName.setText(surnames);
-        email.setText(emails);
-    }*/
-
+    /**
+     * This inner class is used for listenening to button press occuring in the gui of this fragment
+     * handles the actionspress whn clicking on updateinformation
+     */
     private class ButtonClickListener implements View.OnClickListener{
 
         @Override
