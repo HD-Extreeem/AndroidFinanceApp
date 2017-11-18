@@ -36,27 +36,31 @@ public class LoginController {
 
         if (savedInstanceState!=null){
             loginState = savedInstanceState.getBoolean("state");
+            signUpFragment = ui.getFragmentSignUp();
+            loginFragment = ui.getFragmentLogin();
+            signUpFragment.setController(this);
+            loginFragment.setController(this);
+
             if (loginState){
-                ui.setFragment(loginFragment,"loginFragment",true);
-                loginState=true;
+                ui.switchFragment(loginFragment,"loginFragment",false,true);
+                loginFragment.setController(this);
             }
             else{
-                ui.setFragment(signUpFragment,"signUpFragment",true);
-                loginState=false;
+                ui.switchFragment(signUpFragment,"signUpFragment",false,true);
+                signUpFragment.setController(this);
             }
-            onRestoreInstanceState(savedInstanceState);
-            loginFragment = ui.getFragmentLogin();
-            signUpFragment = ui.getFragmentSignUp();
+
         }
         else{
             loginFragment = new LoginFragment();
             signUpFragment = new SignUpFragment();
-
-            ui.setFragment(loginFragment,"loginFragment",false);
+            ui.switchFragment(signUpFragment,"signUpFragment",false,false);
+            ui.switchFragment(loginFragment,"loginFragment",false,false);
             loginState=true;
+            signUpFragment.setController(this);
+            loginFragment.setController(this);
         }
-        loginFragment.setController(this);
-        signUpFragment.setController(this);
+
 
     }
 
@@ -74,11 +78,11 @@ public class LoginController {
         switch (fragment){
             case "Login":
                 loginState=true;
-                ui.setFragment(loginFragment,"loginFragment",true);
+                ui.switchFragment(loginFragment,"loginFragment",false,false);
                 break;
             case "Register":
                 loginState=false;
-                ui.setFragment(signUpFragment,"signUpFragment",true);
+                ui.switchFragment(signUpFragment,"signUpFragment",true,false);
                 break;
         }
     }
@@ -86,7 +90,6 @@ public class LoginController {
     public void addUser(User user) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //values.put(UserDBHelper.COLUMN_ID, user.getId());
         values.put(UserDBHelper.COLUMN_NAME, user.getName());
         values.put(UserDBHelper.COLUMN_SURNAME, user.getSurname());
         values.put(UserDBHelper.COLUMN_EMAIL, user.getEmail());
@@ -144,6 +147,10 @@ public class LoginController {
 
     }
 
+    /**
+     * Method used for saving the information i.ex when phone rotated
+     * @param outState bundle to save information to
+     */
     public void onSaveInstanceState(Bundle outState) {
         if (loginState){
             save = loginFragment.getSaveInformation();
@@ -156,21 +163,5 @@ public class LoginController {
 
     }
 
-    public void onRestoreInstanceState(Bundle saveState){
-        if (loginState){
-            save = saveState.getStringArrayList("saveLogin");
-        }
-        else{
-            save = saveState.getStringArrayList("saveLogin");
-        }
-    }
-    public void setSaveInformation(){
-        if (loginState){
-            loginFragment.setInformation(save.get(0),save.get(1));
 
-        }
-        else{
-            //signUpFragment.setInformation(save.get(0),save.get(1),save.get(2),save.get(3));
-        }
-    }
 }

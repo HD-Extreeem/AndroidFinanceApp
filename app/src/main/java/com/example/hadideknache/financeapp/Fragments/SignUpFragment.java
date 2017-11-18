@@ -32,11 +32,6 @@ public class SignUpFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -45,18 +40,16 @@ public class SignUpFragment extends Fragment {
         compInit(view);
         regButton();
 
-        controller.setSaveInformation();
         return view;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString("namesignup",etName.getText().toString());
-        outState.putString("emailsignup", etName.getText().toString());
-        outState.putString("passwordsignup",etPass.getText().toString());
-        outState.putString("surnamesignup",etSurname.getText().toString());
+        //outState.putString("namesignup",etName.getText().toString());
+        //outState.putString("emailsignup", etName.getText().toString());
+        //outState.putString("passwordsignup",etPass.getText().toString());
+        //outState.putString("surnamesignup",etSurname.getText().toString());
         super.onSaveInstanceState(outState);
-        setRetainInstance(true);
     }
     private void regButton() {
         btnClickListener listener = new btnClickListener();
@@ -84,10 +77,6 @@ public class SignUpFragment extends Fragment {
         save.add(etPass.getText().toString());
         save.add(etSurname.getText().toString());
         return save;
-    }
-
-    public void setInformation(String s, String s1, String s2, String s3) {
-
     }
 
     private class btnClickListener implements View.OnClickListener{
