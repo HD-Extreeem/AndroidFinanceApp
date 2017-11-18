@@ -15,7 +15,9 @@ import com.example.hadideknache.financeapp.Fragments.SignUpFragment;
 import java.util.ArrayList;
 
 /**
- * Created by hadideknache on 2017-09-13.
+ * This class handles the logic for the login/signup process
+ *
+ * Created by Hadi Deknache on 2017-09-13.
  */
 
 public class LoginController {
@@ -23,12 +25,18 @@ public class LoginController {
     private LoginFragment loginFragment;
     private SignUpFragment signUpFragment;
     private String email="",pass="";
-    String [][] users = new String[20][4];
     public final static String USERS = "com.example.hadideknache.financeapp.USERS";
     private UserDBHelper dbHelper;
     public Boolean loginState=true;
     private ArrayList<String> save;
 
+    /**
+     * This is the constructor of controller,
+     * Checks if process already earlier was created and started to restore
+     * else creates fragments and initiate them
+     * @param loginActivity instance to the loginActivty
+     * @param savedInstanceState instance to bundle for accessing saved information i.ex rotation
+     */
     public LoginController(LoginActivity loginActivity, Bundle savedInstanceState) {
         this.ui=loginActivity;
         dbHelper = new UserDBHelper(loginActivity);
@@ -64,16 +72,28 @@ public class LoginController {
 
     }
 
+    /**
+     * Method for prepering the loginprocess when successfully logging in
+     * @param user instance to the userobject that is forwarded
+     */
     public void login(User[] user) {
         Intent intent = new Intent(ui.getBaseContext(), MainActivity.class);
         intent.putExtra(USERS,user);
         ui.startActivity(intent);
         ui.finish();
     }
+
+    /**
+     * Method is used for displaying a toast when user successfully created a login
+     */
     public void success() {
         Toast.makeText(ui.getApplicationContext(),"Account successfully created!",Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Method swaps the current fragment to other fragment
+     * @param fragment instance of the fragment that is being swapped to
+     */
     public void switchFragment(String fragment) {
         switch (fragment){
             case "Login":
@@ -87,6 +107,10 @@ public class LoginController {
         }
     }
 
+    /**
+     * Method for adding(signing up) a user and adding the user to the database
+     * @param user userobject containing the information of the user
+     */
     public void addUser(User user) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -98,6 +122,11 @@ public class LoginController {
         db.close();
     }
 
+    /**
+     * Method checks if the usermail/password match the one that is registered to the database
+     * @param etEmailReg the email that user typed for login
+     * @param etPassReg the password that user typed for login
+     */
     public void checkLogin(EditText etEmailReg, EditText etPassReg) {
         email = etEmailReg.getText().toString().toLowerCase();
         pass  = etPassReg.getText().toString();
@@ -128,6 +157,11 @@ public class LoginController {
         cursor.close();
     }
 
+    /**
+     * Method for checking if existing mail already is registered
+     * @param mail the mail that is wanted to be registred
+     * @return a boolean if available or not
+     */
     public boolean checkUser(String mail) {
         String[] selectionArgs = {mail};
         String selectionString = "SELECT * FROM " + UserDBHelper.TABLE_NAME + " WHERE " + UserDBHelper.COLUMN_EMAIL + " = ?";
