@@ -62,14 +62,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         init();
         regButton();
+        controller = new Controller(this,getIntent());
+        /*if (savedInstanceState == null) {
 
-        if (savedInstanceState == null) {
-            controller = new Controller(this,getIntent());
         }
         else {
             controller = new Controller(this,getIntent(),true);
 
-        }
+        }*/
         setUserInfo(controller.getName(),controller.getEmail());
 
     }

@@ -43,6 +43,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
+ * This class is the brain of the whole application
+ * This controller class handles all logic and communication with gui to fragments
  * Created by hadideknache on 2017-09-13.
  */
 
@@ -69,6 +71,11 @@ public class Controller {
     private String EXPENDITUREFRAGMENT= "expenditurefragment";
     private int mY, mM, mD, mH, mMin;
 
+    /**
+     * Controller constructor
+     * @param mainActivity instance to main
+     * @param intent reference to the intent
+     */
     public Controller(MainActivity mainActivity, Intent intent) {
         this.main=mainActivity;
         parcelables = intent.getParcelableArrayExtra(LoginController.USERS);
@@ -81,7 +88,8 @@ public class Controller {
 
     }
 
-    public Controller(MainActivity main,Intent intent,Boolean bool) {
+
+    /*public Controller(MainActivity main,Intent intent,Boolean bool) {
         this.main=main;
         parcelables = intent.getParcelableArrayExtra(LoginController.USERS);
         user = new User[parcelables.length];
@@ -90,18 +98,22 @@ public class Controller {
         }
         fetchFragments();
         dataBaseInit();
-    }
+    }*/
 
-    private void fetchFragments() {
+    /*private void fetchFragments() {
         mainViewFragment = (MainViewFragment) main.getSupportFragmentManager().findFragmentByTag(MAINVIEWFRAGMENT);
         settingsFragment = (SettingsFragment) main.getSupportFragmentManager().findFragmentByTag(SETTINGSFRAGMENT);
         searchFramgent = (SearchFramgent) main.getSupportFragmentManager().findFragmentByTag(SEARCHFRAGMENT);
         incomeFragment = (IncomeFragment) main.getSupportFragmentManager().findFragmentByTag(INCOMEFRAGMENT);
         overViewFragment  =(OverViewFragment) main.getSupportFragmentManager().findFragmentByTag(OVERVIEWFRAGMENT);
         expenditureFragment = (ExpenditureFragment) main.getSupportFragmentManager().findFragmentByTag(EXPENDITUREFRAGMENT);
-    }
+    }*/
 
 
+    /**
+     * Method initialize all fragments as tabfragments and other fragments used
+     * Sends then reference to controller for each fragment
+     */
     private void initFragments(){
         mainViewFragment = new MainViewFragment();
         searchFramgent = new SearchFramgent();
@@ -128,6 +140,9 @@ public class Controller {
         main.setUserInfo(user[0].getName(),user[0].getEmail());
     }
 
+    /**
+     * Initiates the database
+     */
     private void dataBaseInit(){
         userDbHelper = new UserDBHelper(main);
         incomeDBHelper = new IncomeDBHelper(main);
@@ -135,6 +150,10 @@ public class Controller {
         barCodeDBHelper = new BarCodeDBHelper(main);
     }
 
+    /**
+     * Method used for swapping the fragments in the navigation drawer
+     * @param id the id of the fragment that should be swapped to
+     */
     public void switchFragment(int id) {
 
         switch (id){
@@ -157,16 +176,28 @@ public class Controller {
         }
     }
 
+    /**
+     * This method shows a toast to the user
+     * @param str string that is wanted to be displayed
+     */
     public void chartInfo(String str) {
         Toast.makeText(main.getApplicationContext(),str,Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Method used when user logs out
+     * Finish the current activity and start login again
+     */
     public void signOut() {
         Intent intent = new Intent(main.getBaseContext(), LoginActivity.class);
         main.startActivity(intent);
         main.finish();
     }
 
+    /**
+     * Method update the logged in users info with users info before in the database
+     * @param newUser user objecrt that need to be updated with
+     */
     public void updateUser(User newUser) {
         SQLiteDatabase db = userDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -177,6 +208,11 @@ public class Controller {
         Log.d("Updated", newUser.getId() + "=" + UserDBHelper.COLUMN_ID);
         db.update(UserDBHelper.TABLE_NAME, values, UserDBHelper.COLUMN_ID + "=" + newUser.getId(), null);
     }
+
+    /**
+     * Method is used for adding an income to the database
+     * @param income object of the income that was created
+     */
     public void addIncome(Income income) {
         SQLiteDatabase db = incomeDBHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -191,6 +227,11 @@ public class Controller {
         db.close();
 
     }
+
+    /**
+     * Method is used for adding an expanditure to the database
+     * @param expenditure object of the expanditure that was created
+     */
     public void addExpanditure(Expenditure expenditure) {
         SQLiteDatabase db = expenditureDBHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -205,6 +246,15 @@ public class Controller {
         db.close();
 
     }
+
+    /**
+     * Method is used for storing the barcode info in the database,
+     * Makes future scanning of same object return information directly without having to input again
+     * @param category category of the item
+     * @param cost price of the item
+     * @param itemId itemid of the item
+     * @param itemName name of the item
+     */
     public void addBarcode(String category, String cost, String itemId, String itemName){
         SQLiteDatabase db = barCodeDBHelper.getReadableDatabase();
         ContentValues values = new ContentValues();
@@ -215,6 +265,13 @@ public class Controller {
         db.insert(BarCodeDBHelper.TABLE_NAME, "", values); // Prevent from -1 exception
         db.close();
     }
+
+    /**
+     * Method is used to search the database if scanning have been made before
+     * Then returns information
+     * @param itemId itemid that is asking for
+     * @return the iteminformation if available
+     */
     public BarCode[] getBarcodeItem(String itemId){
         int idIndex, categoryIndex,costIndex,itemNameIndex;
         BarCode[] barCode = null;
@@ -240,6 +297,12 @@ public class Controller {
         return barCode;
     }
 
+    /**
+     * Method for getting all incomes for the specific user that is logged in between 2 dates
+     * @param from date that is asked from
+     * @param to date that is asked to
+     * @return all incomes between these dates if available
+     */
     public Income[] getIncomeBetween(String from,String to){
         int idIndex, categoryIndex, timeIndex,dateIndex,earnIndex,titleIndex;
         Income[] income = null;
@@ -268,7 +331,12 @@ public class Controller {
         return income;
 
     }
-
+    /**
+     * Method for getting all expenditure for the specific user that is logged in between 2 dates
+     * @param from date that is asked from
+     * @param to date that is asked to
+     * @return all expenditures between these dates if available
+     */
     public Expenditure[] getExpanditureBetween(String from,String to){
         int idIndex, categoryIndex, timeIndex,dateIndex,costIndex,titleIndex;
         Expenditure[] expenditure = null;
@@ -297,6 +365,11 @@ public class Controller {
         return expenditure;
 
     }
+
+    /**
+     * This method fetches all incomes from the database for the specific user that is logged in
+     * @return incomes for the user
+     */
     public Income[] getAllIncomes(){
         int idIndex, categoryIndex, timeIndex,dateIndex,earnIndex,titleIndex;
         Income[] income = null;
@@ -325,6 +398,10 @@ public class Controller {
         cursor.close();
         return income;
     }
+    /**
+     * This method fetches all expenditures from the database for the specific user that is logged in
+     * @return expenditures for the user
+     */
     public Expenditure[] getAllExpenditures(){
         int idIndex, categoryIndex, timeIndex,dateIndex,costIndex,titleIndex;
         Expenditure[] expenditures = null;
@@ -354,6 +431,14 @@ public class Controller {
     }
 
 
+    /**
+     * This method is used for updating the user information when updating it in the settingsfragment
+     * @param name the new name that is wanted to be updated
+     * @param surname the new surname that is wanted to be updated
+     * @param pass1 old password for securing that user knows
+     * @param pass2 new password that is wanted
+     * @return the result of the changeprocess
+     */
     public boolean UpdateUserSettings(String name, String surname, String pass1, String pass2) {
         if (pass1.equals(user[0].getPass())){
             User userInfo = new User(name,surname,user[0].getEmail(),pass2);
@@ -373,12 +458,23 @@ public class Controller {
         }
     }
 
+    /**
+     * Method is used for filling information of the user on the overview and drawer
+     * @param name the name of the user that is logged in
+     * @param surName the surname of the user that is logged in
+     * @param email the email of the user that is logged in
+     */
     public void fillInformation(EditText name, EditText surName, EditText email) {
         name.setText(user[0].getName());
         surName.setText(user[0].getSurname());
         email.setText(user[0].getEmail());
     }
 
+    /**
+     * This method shows a dialog when the user successfully scanned an object/showing the addincome/expenditure
+     * @param inputType the type of input, income/expenditure
+     * @param contents used for the barcode only if id available
+     */
     public void showDialog(Boolean inputType, String contents) {
         BarCode[] barCode = new BarCode[0];
         if (contents==null){
@@ -395,10 +491,22 @@ public class Controller {
        showDialog(inputType,barCode,contents,isAvailable);
     }
 
+    /**
+     * This method sets the welcome information at the overview fragment
+     * @param tvCardName the name of the user
+     */
     public void setWelcomeName(TextView tvCardName) {
         tvCardName.setText(user[0].getName() + " " + user[0].getSurname());
     }
 
+    /**
+     * This method updates the piechart on the overview fragment
+     * @param entries the entries for the chart
+     * @param tvBalance reference to the textview of balance
+     * @param tvSpent reference to the textview of spent
+     * @param tvTot reference to the textview of total
+     * @param labels arraylist containing the labels(category)
+     */
     public void updateChartView(ArrayList<PieEntry> entries, TextView tvBalance, TextView tvSpent, TextView tvTot, ArrayList<String> labels) {
         double incomeTot = 0;
         double expenditureTot = 0;
@@ -444,6 +552,10 @@ public class Controller {
         }
     }
 
+    /**
+     * This method shows the datepicker when searching
+     * @param etFrom the date that is wanted to search from
+     */
     public void showDatePickFrom(final EditText etFrom) {
         final Calendar cal = Calendar.getInstance();
         int mY = cal.get(Calendar.YEAR);
@@ -473,6 +585,11 @@ public class Controller {
                 }, mY, mM, mD);
         datePickerDialog.show();
     }
+
+    /**
+     * This method shows the datepicker when searching,same as above
+     * @param etTo the date that is wanted to search to
+     */
     public void showDatePickTo(final EditText etTo) {
         final Calendar cal = Calendar.getInstance();
         int mY = cal.get(Calendar.YEAR);
@@ -503,19 +620,44 @@ public class Controller {
         datePickerDialog.show();
     }
 
+    /**
+     * Method returns the name of logged in user
+     * @return name of the logged in user
+     */
     public String getName() {
         return user[0].getName();
     }
+
+    /**
+     * Method returns the email of logged in user
+     * @return emailof the logged in user
+     */
     public String getEmail() {
         return user[0].getEmail();
     }
+
+    /**
+     * Method sets the header in the navdrawer with the username
+     */
     public void setHeaderInfo(){
         main.setUserInfo(user[0].getName(),user[0].getEmail());
     }
+
+    /**
+     * Method for getting the id of the user, used for updating information database
+     * @return id of the user
+     */
     private int getId(){
         return user[0].getId();
     }
 
+    /**
+     * Method for showing the dialog when user i.ex wants to add income/expenditure
+     * @param input if expenditure or income
+     * @param barcode barcode if the it was scanned
+     * @param itemId id of item
+     * @param isAvailable boolean for if scanned barcode item or not
+     */
     public void showDialog(final Boolean input, final BarCode[] barcode, final String itemId, Boolean isAvailable) {
         final int inputType;
         String[] items = {"Food","Leisure","Travel","Accommodation","Other"};
@@ -617,6 +759,9 @@ public class Controller {
         });
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             *Listener of the spinner inside the dialog, when selecting category
+             */
             public void onItemSelected(
                     AdapterView<?> adapterView, View view,
                     int i, long l) {
@@ -670,6 +815,15 @@ public class Controller {
     }
 
 
+    /**
+     * This method pops up a dialog with the info of the object when clicked on it
+     * @param inputType never used
+     * @param dates the date when set
+     * @param times the time when set
+     * @param costs the price of item
+     * @param categories the category of the information provided
+     * @param titles the name of the item
+     */
     public void showDescriptionDialog(boolean inputType, TextView dates, TextView times, TextView costs, TextView categories, TextView titles) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this.main);
         alert.setTitle("Information:");
@@ -715,11 +869,22 @@ public class Controller {
         alert.show();
     }
 
+    /**
+     * Method is used for setting the dates again after a rotation
+     * @param etFrom the editText reference
+     * @param etTo the editText reference
+     * @param from date that was set from
+     * @param to date that was set to
+     */
     public void setEditText(EditText etFrom,EditText etTo,String from,String to){
         etFrom.setText(from);
         etTo.setText(to);
     }
 
+    /**
+     * Method for setting the instance to incomefragment
+     * @param instance instance to the incomefragment
+     */
     public void setInstance(IncomeFragment instance) {
         this.incomeFragment = instance;
     }
