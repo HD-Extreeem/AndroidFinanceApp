@@ -1,15 +1,18 @@
 package com.example.hadideknache.financeapp;
 
-import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.hadideknache.financeapp.Fragments.LoginFragment;
+import com.example.hadideknache.financeapp.Fragments.SignUpFragment;
+
+import java.util.ArrayList;
 
 /**
  * Created by hadideknache on 2017-09-13.
@@ -23,22 +26,44 @@ public class LoginController {
     String [][] users = new String[20][4];
     public final static String USERS = "com.example.hadideknache.financeapp.USERS";
     private UserDBHelper dbHelper;
+    public Boolean loginState=true;
+    private ArrayList<String> save;
 
-    public LoginController(LoginActivity loginActivity) {
+    public LoginController(LoginActivity loginActivity, Bundle savedInstanceState) {
         this.ui=loginActivity;
         dbHelper = new UserDBHelper(loginActivity);
-        loginFragment = new LoginFragment();
-        signUpFragment = new SignUpFragment();
+        save = new ArrayList<>();
+
+        if (savedInstanceState!=null){
+            loginState = savedInstanceState.getBoolean("state");
+            if (loginState){
+                ui.setFragment(loginFragment,"loginFragment",true);
+                loginState=true;
+            }
+            else{
+                ui.setFragment(signUpFragment,"signUpFragment",true);
+                loginState=false;
+            }
+            onRestoreInstanceState(savedInstanceState);
+            loginFragment = ui.getFragmentLogin();
+            signUpFragment = ui.getFragmentSignUp();
+        }
+        else{
+            loginFragment = new LoginFragment();
+            signUpFragment = new SignUpFragment();
+
+            ui.setFragment(loginFragment,"loginFragment",false);
+            loginState=true;
+        }
         loginFragment.setController(this);
         signUpFragment.setController(this);
-        ui.setFragment(loginFragment);
+
     }
 
     public void login(User[] user) {
         Intent intent = new Intent(ui.getBaseContext(), MainActivity.class);
         intent.putExtra(USERS,user);
         ui.startActivity(intent);
-
         ui.finish();
     }
     public void success() {
@@ -48,10 +73,12 @@ public class LoginController {
     public void switchFragment(String fragment) {
         switch (fragment){
             case "Login":
-                ui.setFragment(loginFragment);
+                loginState=true;
+                ui.setFragment(loginFragment,"loginFragment",true);
                 break;
             case "Register":
-                ui.setFragment(signUpFragment);
+                loginState=false;
+                ui.setFragment(signUpFragment,"signUpFragment",true);
                 break;
         }
     }
@@ -59,22 +86,13 @@ public class LoginController {
     public void addUser(User user) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(UserDBHelper.COLUMN_ID, user.getId());
+        //values.put(UserDBHelper.COLUMN_ID, user.getId());
         values.put(UserDBHelper.COLUMN_NAME, user.getName());
         values.put(UserDBHelper.COLUMN_SURNAME, user.getSurname());
         values.put(UserDBHelper.COLUMN_EMAIL, user.getEmail());
         values.put(UserDBHelper.COLUMN_PASS, user.getPass());
         db.insert(UserDBHelper.TABLE_NAME, "", values); // Prevent from -1 exception
         db.close();
-    }
-
-    public void addItems() {
-        /*User[] users = {new User("0","Albert","Einstein","Albert@gmail.com","abcdefg"),
-                new User("1","Berry","Berry","Berry@gmail.com","berries"),
-                new User("2","Catja","mambo","mambo@hotmail.com","mambooo")};
-        for(User user : users) {
-            addUser(user);
-        }*/
     }
 
     public void checkLogin(EditText etEmailReg, EditText etPassReg) {
@@ -109,9 +127,9 @@ public class LoginController {
 
     public boolean checkUser(String mail) {
         String[] selectionArgs = {mail};
-        String selectString = "SELECT * FROM " + UserDBHelper.TABLE_NAME + " WHERE " + UserDBHelper.COLUMN_EMAIL + " = ?";
+        String selectionString = "SELECT * FROM " + UserDBHelper.TABLE_NAME + " WHERE " + UserDBHelper.COLUMN_EMAIL + " = ?";
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectString,selectionArgs);
+        Cursor cursor = db.rawQuery(selectionString,selectionArgs);
 
         if (cursor.getCount() > 0) {
             cursor.close();
@@ -124,5 +142,35 @@ public class LoginController {
             return false;
         }
 
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
+        if (loginState){
+            save = loginFragment.getSaveInformation();
+            outState.putStringArrayList("saveLogin",save);
+        }
+        else{
+            save = signUpFragment.getSaveInformation();
+            outState.putStringArrayList("saveLogin",save);
+        }
+
+    }
+
+    public void onRestoreInstanceState(Bundle saveState){
+        if (loginState){
+            save = saveState.getStringArrayList("saveLogin");
+        }
+        else{
+            save = saveState.getStringArrayList("saveLogin");
+        }
+    }
+    public void setSaveInformation(){
+        if (loginState){
+            loginFragment.setInformation(save.get(0),save.get(1));
+
+        }
+        else{
+            //signUpFragment.setInformation(save.get(0),save.get(1),save.get(2),save.get(3));
+        }
     }
 }

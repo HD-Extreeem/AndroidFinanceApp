@@ -1,14 +1,107 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.hadideknache.financeapp.IncomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/gradientsearch"
+    android:id="@+id/incomeFragment"
+    tools:context="com.example.hadideknache.financeapp.Fragments.IncomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewInc"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scrollbars="none" />
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="90dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-</FrameLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="50dp"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_weight="0.28">
+
+                <EditText
+                    android:id="@+id/etDateSearchFromInc"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:layout_marginBottom="5dp"
+                    android:hint="Search date From"
+                    android:inputType="date"
+                    android:textIsSelectable="true" />
+
+                <EditText
+                    android:id="@+id/etSearchDateToInc"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:textIsSelectable="true"
+                    android:clickable="true"
+                    android:hint="Search date to" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnSearchInc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#00838f"
+                    android:text=" Search by Date " />
+
+                <Button
+                    android:id="@+id/btnSearchResetInc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:background="#00838f"
+                    android:gravity="center"
+                    android:text=" Refresh List " />
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewInc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabIncome"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+
+            android:elevation="6dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="40dp"
+            android:layout_gravity="bottom|end"
+            app:backgroundTint="#00838f"
+            app:fabSize="normal"
+            app:rippleColor="@android:color/black"
+            android:src="@drawable/add"/>
+    </FrameLayout>
+
+
+
+</LinearLayout>

@@ -10,15 +10,26 @@ public class Income {
     private String time;
     private String date;
     private String earn;
+    private String title;
 
-    public Income(int  id, String category,String time,String date,String earn){
+    public Income(int  id, String category,String time,String date,String earn,String title){
         this.id=id;
         this.category = category;
         this.time=time;
         this.date=date;
         this.earn=earn;
+        this.title=title;
     }
-    public String getCost() {
+
+    public Income(String category, String time, String date, String earn,String title) {
+        this.category = category;
+        this.time=time;
+        this.date=date;
+        this.earn=earn;
+        this.title=title;
+    }
+
+    public String getEarn() {
         return earn;
     }
 
@@ -57,4 +68,13 @@ public class Income {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getTitle(){
+        return title;
+    }
+    public void setTitle(String title){
+        this.title=title;
+    }
+
+
 }

@@ -1,53 +1,65 @@
-package com.example.hadideknache.financeapp;
+package com.example.hadideknache.financeapp.Fragments;
 
 
-import android.app.FragmentManager;
-import android.graphics.Color;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
+import com.example.hadideknache.financeapp.Controller;
+import com.example.hadideknache.financeapp.R;
+import com.example.hadideknache.financeapp.ViewPagerAdapter;
 
-import com.github.mikephil.charting.charts.PieChart;
-
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-
-import java.util.ArrayList;
-
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 
-public class MainViewFragment extends Fragment {
-    android.support.v4.app.FragmentManager fragManager;
-    Controller controller;
-    TextView user;
-    private PieChart pieChart;
+public class MainViewFragment extends android.support.v4.app.Fragment {
 
-    private ArrayList<String> labels = new ArrayList<String>();
-    ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
+    Controller controller;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    ViewPagerAdapter adapter;
 
     public MainViewFragment() {
         // Required empty public constructor
-    }
 
+    }
+    public void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+    /*public static MainViewFragment newInstance(String str) {
+        MainViewFragment mainFrag = new MainViewFragment();
+        Bundle args = new Bundle();
+        args.putString("incFrag", str);
+        mainFrag.setArguments(args);
+        return mainFrag;
+    }*/
+
+
+    /*@Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if (savedInstanceState!=null) {
+            viewPager.setCurrentItem(savedInstanceState.getInt("tabpos"));
+
+        }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setRetainInstance(true);
         View view = inflater.inflate(R.layout.fragment_main_view, container, false);
         init(view);
         //regButton();
@@ -55,16 +67,17 @@ public class MainViewFragment extends Fragment {
     }
 
 
-
     private void init(View view) {
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.ViewPager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(fragManager);
+
+        viewPager = (ViewPager) view.findViewById(R.id.ViewPager);
+        adapter = new ViewPagerAdapter(getChildFragmentManager(),controller);
         viewPager.setAdapter(adapter);
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+        tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
     }
-        /*user = (TextView) view.findViewById(R.id.user);
+
+    /*user = (TextView) view.findViewById(R.id.user);
         pieChart = (PieChart) view.findViewById(R.id.pieChart);
 
         pieChart.setUsePercentValues(true);
@@ -74,7 +87,6 @@ public class MainViewFragment extends Fragment {
         labels.add("Travel");
         labels.add("Accommodation,");
         labels.add("Other");
-
 
         for (int i = 0; i < 5 ; i++) {
             entries.add(new PieEntry((i+17), labels.get(i)));
@@ -92,11 +104,14 @@ public class MainViewFragment extends Fragment {
         //controller.setUserSettings();
     }*/
 
-    public void setController(Controller controller, android.support.v4.app.FragmentManager fragmentManager) {
+    public void setController(Controller controller) {
         this.controller = controller;
-        this.fragManager = fragmentManager;
 
     }
+
+
+
+
 
 
 }

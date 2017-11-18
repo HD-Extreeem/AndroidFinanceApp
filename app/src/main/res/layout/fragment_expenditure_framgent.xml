@@ -1,14 +1,99 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.hadideknache.financeapp.ExpenditureFragment">
+    android:orientation="vertical"
+    android:background="@drawable/gradientsearch"
+    android:id="@+id/expenditureFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.hadideknache.financeapp.Fragments.ExpenditureFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewExp"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scrollbars="none" />
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="90dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-</FrameLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="50dp"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_weight="0.28">
+
+                <EditText
+                    android:id="@+id/etSearchDateFromExp"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:hint="Search date From"
+                    android:inputType="date"
+                    android:textIsSelectable="true" />
+
+                <EditText
+                    android:id="@+id/etSearchDateToExp"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Search date to"
+                    android:inputType="date"
+                    android:textIsSelectable="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnSearchExp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#00838f"
+                    android:text=" Search by Date " />
+
+                <Button
+                    android:id="@+id/btnSearchResetExp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:background="#00838f"
+                    android:gravity="center"
+                    android:text=" Refresh List " />
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+             android:id="@+id/recyclerViewExp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scrollbars="none" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabExpenditure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:elevation="6dp"
+            android:layout_marginBottom="40dp"
+            android:layout_gravity="end|bottom"
+            app:backgroundTint="#00838f"
+            app:fabSize="normal"
+            app:rippleColor="@android:color/black"
+            android:src="@drawable/add" />
+    </FrameLayout>
+</LinearLayout>

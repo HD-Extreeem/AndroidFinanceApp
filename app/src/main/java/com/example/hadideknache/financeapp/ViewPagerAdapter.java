@@ -1,30 +1,35 @@
 package com.example.hadideknache.financeapp;
 
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+
+import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.example.hadideknache.financeapp.Fragments.ExpenditureFragment;
+import com.example.hadideknache.financeapp.Fragments.IncomeFragment;
+import com.example.hadideknache.financeapp.Fragments.OverViewFragment;
 
 
-import android.widget.TextView;
 /**
  * Created by hadideknache on 2017-09-17.
  */
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
-    OverViewFragment overViewFragment = new OverViewFragment();
-    ExpenditureFragment expenditureFragment = new ExpenditureFragment();
-    IncomeFragment incomeFragment = new IncomeFragment();
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+    private Controller controller;
 
-    public ViewPagerAdapter(FragmentManager fragmentManager) {
+    public ViewPagerAdapter(android.support.v4.app.FragmentManager fragmentManager, Controller controller) {
         super(fragmentManager);
+        this.controller=controller;
     }
+
+
 
     @Override
     public Fragment getItem(int position) {
 
         switch (position) {
             case 0:
-                return overViewFragment.newInstance("OverView");
+                return OverViewFragment.newInstance("OverView");
             case 1:
                 return ExpenditureFragment.newInstance("Expenditure");
             case 2:
@@ -55,5 +60,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 3;
+    }
+
+    @Override
+    public Parcelable saveState() {
+        return null;
     }
 }

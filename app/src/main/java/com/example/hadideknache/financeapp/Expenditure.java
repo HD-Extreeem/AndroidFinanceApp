@@ -10,14 +10,25 @@ public class Expenditure {
     private String time;
     private String date;
     private String cost;
+    private String title;
 
-    public Expenditure(int  id, String category,String time,String date,String cost){
+    public Expenditure(int  id, String category,String time,String date,String cost,String title){
         this.id=id;
         this.category = category;
         this.time=time;
         this.date=date;
         this.cost=cost;
+        this.title=title;
     }
+
+    public Expenditure(String category, String time, String date, String cost,String title) {
+        this.category = category;
+        this.time=time;
+        this.date=date;
+        this.cost=cost;
+        this.title=title;
+    }
+
     public String getCost() {
         return cost;
     }
@@ -56,6 +67,12 @@ public class Expenditure {
 
     public void setId(int id) {
         this.id = id;
+    }
+    public String getTitle(){
+        return title;
+    }
+    public void setTitle(String title){
+        this.title=title;
     }
 }
 

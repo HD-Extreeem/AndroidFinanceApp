@@ -1,4 +1,4 @@
-package com.example.hadideknache.financeapp;
+package com.example.hadideknache.financeapp.Fragments;
 
 
 import android.os.Bundle;
@@ -10,30 +10,53 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.hadideknache.financeapp.LoginController;
+import com.example.hadideknache.financeapp.R;
+import com.example.hadideknache.financeapp.User;
+
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SignUpFragment extends Fragment {
-    LoginController controller;
-    EditText etName,etEmail,etPass,etSurname;
-    Button btnReg,btnLogAlready;
-    int i=0;
+    private LoginController controller;
+    private EditText etName,etEmail,etPass,etSurname;
+    private Button btnReg,btnLogAlready;
+    private int i=0;
     boolean isEmailReg=false;
     boolean register = true;
     public SignUpFragment() {
         // Required empty public constructor
     }
 
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        setRetainInstance(true);
         compInit(view);
         regButton();
+
+        controller.setSaveInformation();
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("namesignup",etName.getText().toString());
+        outState.putString("emailsignup", etName.getText().toString());
+        outState.putString("passwordsignup",etPass.getText().toString());
+        outState.putString("surnamesignup",etSurname.getText().toString());
+        super.onSaveInstanceState(outState);
+        setRetainInstance(true);
     }
     private void regButton() {
         btnClickListener listener = new btnClickListener();
@@ -53,6 +76,20 @@ public class SignUpFragment extends Fragment {
     public void setController(LoginController controller) {
         this.controller = controller;
     }
+
+    public ArrayList<String> getSaveInformation() {
+        ArrayList<String> save = new ArrayList<>();
+        save.add(etEmail.getText().toString());
+        save.add(etName.getText().toString());
+        save.add(etPass.getText().toString());
+        save.add(etSurname.getText().toString());
+        return save;
+    }
+
+    public void setInformation(String s, String s1, String s2, String s3) {
+
+    }
+
     private class btnClickListener implements View.OnClickListener{
 
         @Override
@@ -120,4 +157,5 @@ public class SignUpFragment extends Fragment {
             return true;
         }
     }
+
 }

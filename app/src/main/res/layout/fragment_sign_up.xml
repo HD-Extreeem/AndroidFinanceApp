@@ -5,6 +5,7 @@
     android:background="@drawable/screen"
     android:clipToPadding="false"
     android:orientation="vertical"
+    android:id="@+id/fragmentSignup"
     android:layout_height="match_parent">
 
     <TextView

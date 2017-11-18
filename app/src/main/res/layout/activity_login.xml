@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/loginFragment"
-        android:name="com.example.hadideknache.financeapp.LoginFragment"
+        android:name="com.example.hadideknache.financeapp.Fragments.LoginFragment"
         tools:layout="@layout/fragment_login" />
     <FrameLayout
         android:layout_width="match_parent"

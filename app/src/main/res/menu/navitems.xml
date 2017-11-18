@@ -10,8 +10,8 @@
             android:title="Settings"
             android:icon="@drawable/setting"/>
         <item
-            android:id="@+id/search"
-            android:title="Search"
-            android:icon="@drawable/search"/>
+            android:id="@+id/scan"
+            android:title="Scan"
+            android:icon="@drawable/barcode"/>
     </group>
 </menu>

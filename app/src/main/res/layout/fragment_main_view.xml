@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:id="@+id/linearLayout"
-    tools:context="com.example.hadideknache.financeapp.MainViewFragment"
+    android:id="@+id/mainViewFrag"
+    tools:context="com.example.hadideknache.financeapp.Fragments.MainViewFragment"
     android:weightSum="1">
 
     <android.support.design.widget.TabLayout
@@ -23,7 +23,5 @@
         android:id="@+id/ViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-
 
 </LinearLayout>

@@ -1,24 +1,181 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.hadideknache.financeapp.OverViewFragment">
+    android:orientation="vertical"
+    android:background="@drawable/gradientsearch"
+    android:id="@+id/overViewFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.hadideknache.financeapp.Fragments.OverViewFragment">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:layout_marginTop="3dp"
+        app:cardElevation="8dp">
 
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="@string/home"
-        android:textAlignment="center"
-        android:textSize="24sp" />
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:textColor="#00838f"
+            android:text="@string/home"
 
+            android:textAlignment="center"
+            android:textSize="34sp"
+            android:typeface="serif" />
+
+        <com.example.hadideknache.financeapp.CustomText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/home"
+            android:textAlignment="center"
+            android:textSize="34sp"
+            android:typeface="serif"/>
+
+        <TextView
+            android:id="@+id/tvCardName"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="26sp" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="@string/total"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="#00838f"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/tvTot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="serif-monospace"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="30dp"
+                 android:gravity="center"
+                 android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="@string/spent"
+                    android:textAlignment="center"
+                    android:textColor="#00838f"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/tvSpent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="serif-monospace"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="serif-monospace"
+                    android:gravity="center"
+                    android:text="Balance:"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="#00838f"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/tvBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="serif-monospace"
+                    android:gravity="center_vertical"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
 
     <com.github.mikephil.charting.charts.PieChart
-        android:layout_width="match_parent"
-        android:layout_marginTop="160dp"
         android:id="@+id/pieChart"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="310dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="0.22">
 
     </com.github.mikephil.charting.charts.PieChart>
 
-</FrameLayout>
+
+
+</LinearLayout>
