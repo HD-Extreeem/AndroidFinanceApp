@@ -8,7 +8,9 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 /**
- * Created by hadideknache on 2017-09-17.
+ * This class is a viewholder for the recyclerview used for incomefragment and expenditure
+ * when showing the dialog to input info
+ * Created by Hadi Deknache on 2017-09-17.
  */
 
 public class ViewHolder extends RecyclerView.ViewHolder {
@@ -20,6 +22,10 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     TextView title;
     CardView cardView;
 
+    /**
+     * Viewholder constructor initiating the component
+     * @param itemView view of the viewholder which have all component
+     */
     public ViewHolder(View itemView) {
         super(itemView);
         //row = (TextView) itemView.findViewById(R.id.card);

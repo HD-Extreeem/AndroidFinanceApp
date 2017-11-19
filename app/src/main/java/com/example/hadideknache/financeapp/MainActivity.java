@@ -139,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     /**
      * Method for setting the information
      * @param username the username of the logged in user

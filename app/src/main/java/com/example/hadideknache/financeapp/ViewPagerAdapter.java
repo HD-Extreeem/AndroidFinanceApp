@@ -2,16 +2,15 @@ package com.example.hadideknache.financeapp;
 
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-
 import android.support.v4.app.FragmentStatePagerAdapter;
-
 import com.example.hadideknache.financeapp.Fragments.ExpenditureFragment;
 import com.example.hadideknache.financeapp.Fragments.IncomeFragment;
 import com.example.hadideknache.financeapp.Fragments.OverViewFragment;
 
 
 /**
- * Created by hadideknache on 2017-09-17.
+ * This class is an adapter for handling the transactions between the tab movments and change content of the tabs
+ * Created by Hadi Deknache on 2017-09-17.
  */
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -23,7 +22,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     }
 
 
-
+    /**
+     * Method overriden for getting the item, in other words the fragments inside
+     * @param position the position of the tab that is being clicked
+     * @return the fragment content
+     */
     @Override
     public Fragment getItem(int position) {
 
@@ -39,6 +42,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         }
     }
 
+    /**
+     * Method overridden to set title to tabs
+     * @param pos the tab position
+     * @return the title of the tab at that position
+     */
     @Override
     public CharSequence getPageTitle(int pos) {
         String title = null;

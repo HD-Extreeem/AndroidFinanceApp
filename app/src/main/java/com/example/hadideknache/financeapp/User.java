@@ -4,7 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by hadideknache on 2017-09-13.
+ * This class is a pojo class which each user have a userobject with its information
+ * The user is implementing parcelable which can be saved and sent to other activities
+ * Created by Hadi Deknache on 2017-09-13.
  */
 
 public class User implements Parcelable{
@@ -14,6 +16,14 @@ public class User implements Parcelable{
     private String email;
     private String pass;
 
+    /**
+     * User constructor
+     * @param id id set by the database
+     * @param name the name of the user
+     * @param surname the surname of the user
+     * @param email the email of the user
+     * @param pass the password of the user
+     */
     public User(int id,String name, String surname, String email, String pass){
         this.id = id;
         this.name = name;
@@ -23,6 +33,13 @@ public class User implements Parcelable{
 
     }
 
+    /**
+     * User constructor
+     * @param name the name of the user
+     * @param surname the surname of the user
+     * @param email the email of the user
+     * @param pass the password of the user
+     */
     public User(String name, String surname, String email, String pass) {
         this.name = name;
         this.surname = surname;
@@ -70,6 +87,11 @@ public class User implements Parcelable{
         return 0;
     }
 
+    /**
+     * Method writes data to parcel for saving it
+     * @param parcel the parcel to pack the information to
+     * @param i
+     */
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
@@ -78,6 +100,10 @@ public class User implements Parcelable{
         parcel.writeString(email);
         parcel.writeString(pass);
     }
+
+    /**
+     * Method creating the parcel of userobjects
+     */
     public static final Creator<User> CREATOR = new Creator<User>() {
         public User createFromParcel(Parcel source) {
             return new User(source.readInt(),source.readString(),source.readString(),source.readString(),source.readString());
